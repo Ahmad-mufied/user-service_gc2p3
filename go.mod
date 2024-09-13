@@ -1,4 +1,4 @@
-module go-app-platform
+module simple-echo
 
 go 1.23.0
 
