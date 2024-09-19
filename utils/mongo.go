@@ -6,11 +6,12 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
+	"user-service_gc2p3/config"
 )
 
 func GetCollection(client *mongo.Client, collectionName string) *mongo.Collection {
-	//dbName := config.Viper.GetString("MONGO_DB")
-	return client.Database("students").Collection(collectionName)
+	dbName := config.Viper.GetString("MONGO_DB")
+	return client.Database(dbName).Collection(collectionName)
 }
 
 // CheckDocumentExists checks if a document exists in the specified collection by its _id

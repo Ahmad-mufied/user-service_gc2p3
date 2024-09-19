@@ -7,6 +7,7 @@ import (
 	"golang.org/x/crypto/bcrypt"
 	"user-service_gc2p3/entity"
 	"user-service_gc2p3/pb"
+	"user-service_gc2p3/utils"
 )
 
 type UserService struct {
@@ -22,7 +23,7 @@ func (s *UserService) Login(ctx context.Context, req *pb.LoginUserRequest) (*pb.
 	password := req.GetPassword()
 
 	// check if user exists
-	coll := s.db.Database("user_db").Collection("users")
+	coll := utils.GetCollection(s.db, "users")
 	filter := bson.M{"username": username}
 	var user entity.User
 	err := coll.FindOne(ctx, filter).Decode(&user)
@@ -57,7 +58,7 @@ func (s *UserService) Register(ctx context.Context, req *pb.RegisterUserRequest)
 	}
 
 	// insert user
-	coll := s.db.Database("user_db").Collection("users")
+	coll := utils.GetCollection(s.db, "users")
 	user := entity.User{
 		Username: username,
 		Password: string(hashedPassword),
@@ -79,7 +80,7 @@ func (s *UserService) GetUserById(ctx context.Context, req *pb.GetUserByIdReques
 	id := req.GetUserId()
 
 	// get user by id
-	coll := s.db.Database("user_db").Collection("users")
+	coll := utils.GetCollection(s.db, "users")
 	filter := bson.M{"_id": id}
 	var user entity.User
 	err := coll.FindOne(ctx, filter).Decode(&user)
