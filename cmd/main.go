@@ -45,7 +45,7 @@ func main() {
 	pb.RegisterAuthUserServiceServer(grpcServer, userServer)
 	reflection.Register(grpcServer)
 
-	gRPCPort := config.Viper.GetString("gRPC_PORT")
+	gRPCPort := config.Viper.GetString("GRPC_PORT")
 	listen, err := net.Listen("tcp", fmt.Sprintf(":%s", gRPCPort))
 	if err != nil {
 		log.Fatal(err)
