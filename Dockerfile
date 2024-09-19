@@ -12,7 +12,7 @@ RUN go mod download
 COPY . .
 
 # Build the Go application
-RUN go build -o /main cmd/main.go
+RUN go build -o main cmd/main.go
 
 # Stage 2: Create the lightweight image for deployment
 FROM alpine:3.18
@@ -28,5 +28,3 @@ EXPOSE 8080
 
 # Command to run the app
 CMD ["./main"]
-
-
